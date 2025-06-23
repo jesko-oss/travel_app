@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Просмотр маршрута</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: sans-serif;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+    .info-box {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #e3d7d1;
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 1000;
+      color: #322724;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+<div class="info-box">
+  <strong>Маршрут: Золотое кольцо</strong><br>
+  Москва → Сергиев Посад → Переславль-Залесский → Ростов → Ярославль
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const map = L.map('map').setView([56.5, 39.5], 7);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const points = [
+    {name: "Москва", lat: 55.751244, lng: 37.618423},
+    {name: "Сергиев Посад", lat: 56.3011, lng: 38.1358},
+    {name: "Переславль-Залесский", lat: 56.7364, lng: 38.8544},
+    {name: "Ростов Великий", lat: 57.1919, lng: 39.4139},
+    {name: "Ярославль", lat: 57.6261, lng: 39.8845}
+  ];
+
+  const latlngs = [];
+
+  points.forEach((p, i) => {
+    const marker = L.marker([p.lat, p.lng]).addTo(map);
+    marker.bindPopup(`<b>${i + 1}. ${p.name}</b>`);
+    latlngs.push([p.lat, p.lng]);
+  });
+
+  L.polyline(latlngs, {color: '#72b19e', weight: 4}).addTo(map);
+</script>
+
+</body>
+</html>

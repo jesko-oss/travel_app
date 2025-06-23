@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Карта путешествий</title>
+    <style>
+        body {
+            background-color: #322724;
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #f5f0e7;
+        }
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 300px;
+        }
+        .btn {
+            padding: 15px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .create {
+            background-color: #f59473;
+            color: #fff;
+        }
+        .view {
+            background-color: #e3d7d1;
+            color: #322724;
+        }
+        .about {
+            background-color: #f5f0e7;
+            color: #322724;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Карта путешествий</h1>
+    <div class="menu">
+        <a href="/map"><button class="btn create">Создать маршрут</button></a>
+        <a href="/routes"><button class="btn view">Просмотр маршрутов</button></a>
+        <a href="/about"><button class="btn about">О приложении</button></a>
+    </div>
+    <div class="footer">версия 3.0 • Developret</div>
+</body>
+</html>

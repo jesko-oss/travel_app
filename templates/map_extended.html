@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Создание маршрута</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: sans-serif;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+    .control-panel {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: #e3d7d1;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .control-panel button {
+      margin-top: 5px;
+      padding: 8px 10px;
+      background-color: #f59473;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      display: block;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+<div class="control-panel">
+  <div>Кликай по карте, чтобы добавить точки маршрута</div>
+  <button onclick="saveRoute()">Сохранить маршрут</button>
+  <button onclick="loadRoute()">Загрузить маршрут</button>
+  <button onclick="clearRoute()">Очистить</button>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const map = L.map('map').setView([55.751244, 37.618423], 10);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const routePoints = [];
+  let polyline = null;
+
+  function updateRoute() {
+    if (polyline) {
+      map.removeLayer(polyline);
+    }
+    polyline = L.polyline(routePoints.map(p => [p.lat, p.lng]), {color: '#f59473'}).addTo(map);
+  }
+
+  map.on('click', function(e) {
+    const name = prompt("Введите название точки:");
+    if (!name) return;
+
+    const latlng = e.latlng;
+    const point = {name: name, lat: latlng.lat, lng: latlng.lng};
+    routePoints.push(point);
+
+    const marker = L.marker(latlng).addTo(map);
+    marker.bindPopup(`<b>${name}</b>`).openPopup();
+
+    updateRoute();
+  });
+
+  function saveRoute() {
+    const json = JSON.stringify(routePoints);
+    localStorage.setItem("travelRoute", json);
+    alert("Маршрут сохранён.");
+  }
+
+  function loadRoute() {
+    const data = localStorage.getItem("travelRoute");
+    if (!data) return alert("Нет сохранённого маршрута.");
+    const parsed = JSON.parse(data);
+    routePoints.length = 0;
+    parsed.forEach(p => {
+      routePoints.push(p);
+      const marker = L.marker([p.lat, p.lng]).addTo(map);
+      marker.bindPopup(`<b>${p.name}</b>`);
+    });
+    updateRoute();
+  }
+
+  function clearRoute() {
+    location.reload();
+  }
+</script>
+
+</body>
+</html>

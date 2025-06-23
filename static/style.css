@@ -1,0 +1,54 @@
+
+body {
+  font-family: sans-serif;
+  background-color: #322724;
+  color: #e3d7d1;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #e3d7d1;
+}
+
+#menu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+  background-color: #322724;
+}
+
+#menu button {
+  background-color: #72b19e;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#content {
+  padding: 20px;
+}
+
+.route-card {
+  background-color: #e3d7d1;
+  color: #322724;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+#map {
+  height: 400px;
+  margin-top: 20px;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.8em;
+  color: #e3d7d1;
+  padding: 10px;
+}

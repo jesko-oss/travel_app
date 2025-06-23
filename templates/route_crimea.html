@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Крымское побережье</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
+    .info-box {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #e3d7d1;
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 1000;
+      color: #322724;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+<div class="info-box">
+  <strong>Маршрут: Крымское побережье</strong><br>
+  Симферополь → Ялта → Севастополь → Балаклава → Евпатория
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const map = L.map('map').setView([44.8, 34.1], 9);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const points = [
+    [44.9521, 34.1024, "Симферополь"],
+    [44.4958, 34.1660, "Ялта"],
+    [44.6167, 33.5254, "Севастополь"],
+    [44.5033, 33.5997, "Балаклава"],
+    [45.1904, 33.3665, "Евпатория"]
+  ];
+
+  const latlngs = [];
+
+  points.forEach(([lat, lng, name], i) => {
+    L.marker([lat, lng]).addTo(map).bindPopup(`<b>${i + 1}. ${name}</b>`);
+    latlngs.push([lat, lng]);
+  });
+
+  L.polyline(latlngs, { color: '#72b19e', weight: 4 }).addTo(map);
+</script>
+
+</body>
+</html>
